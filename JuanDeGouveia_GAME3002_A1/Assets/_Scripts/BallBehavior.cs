@@ -13,9 +13,9 @@ public class BallBehavior : MonoBehaviour
     public bool ballKicked = false;
     public int goals;
     public float gravity;
-    private float maxF = 40.0f;
-    private float mouseNotPressed = 0;
-    private float mousePressed = 0;
+    private float maxF = 30.0f;
+    private float mouseNotPressed = 0.0f;
+    private float mousePressed = 0.0f;
     Vector3 initialPos;
     [SerializeField] GameObject shadow;
     // Start is called before the first frame update
@@ -26,7 +26,7 @@ public class BallBehavior : MonoBehaviour
         goals = 0;
         Ball = GetComponent<Rigidbody>();
         Ball.useGravity = false;
-        StartCoroutine(initicalPosition());
+        StartCoroutine(initialPosition());
     }
     // The ball gets kicked taking the direction and the time it was held down to calculate the strenght of the kick
     public void apllyForce(Vector3 direction, float lvelocity)
@@ -87,7 +87,7 @@ public class BallBehavior : MonoBehaviour
             Scored = true;
         }
     }
-
+    // After scoring a goal (or missing) the ball gets reset to its original position
     IEnumerator resetGame()
     {
         yield return new WaitForSeconds(3);
@@ -95,7 +95,7 @@ public class BallBehavior : MonoBehaviour
         {
             goals++;
         }
-        Ball.transform.position = new Vector3(0.0f, 1.0f, -5.27f);
+        Ball.transform.position = new Vector3(0.0f, -0.93f, -6.00f);
         Ball.velocity = new Vector3(0.0f, 0.0f, 0.0f);
         Ball.freezeRotation = true;
 
@@ -105,7 +105,7 @@ public class BallBehavior : MonoBehaviour
 
     IEnumerator initialPosition()
     {
-        yield return new WaitForSeconds(0.8);
+        yield return new WaitForSeconds(0.8f);
         initialPos = Ball.position;
     }
     // UI calculations
